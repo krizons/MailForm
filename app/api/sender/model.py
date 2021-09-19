@@ -1,11 +1,21 @@
 from pydantic import BaseModel
-from typing import Optional
+from fastapi import Form
 
 
 class CreateTaskRequest(BaseModel):
     heading: str
     subtitle: str
     description: str
+
+    @classmethod
+    def as_form(
+            cls,
+            heading: str = Form(...),
+            subtitle: str = Form(...),
+            description: str = Form(...)
+    ):
+
+        return cls(heading=heading, subtitle=subtitle, description=description)
 
     class Config:
         title = "Запрос на создание задания sender"

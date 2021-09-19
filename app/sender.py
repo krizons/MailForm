@@ -6,7 +6,7 @@ from conf import settings
 from database import db, mail_task
 import aiosmtplib
 import aiofiles
-
+import traceback
 import os.path
 
 
@@ -26,6 +26,7 @@ async def sender():
         if not smtp.is_connected:
             try:
                 await smtp.connect()
+                print("CONNECT OK")
             except:
                 print("NOT CONNECT")
                 pass
@@ -55,7 +56,9 @@ async def sender():
                                         message.as_string())
 
                     await db.execute(mail_task.delete().where(mail_task.c.id == msg.get("id")))
+                    print("SEND OK")
                 except:
+                    print(traceback.format_exc())
                     pass
 
         await asyncio.sleep(3)
@@ -63,3 +66,4 @@ async def sender():
 
 event_loop = asyncio.get_event_loop()
 event_loop.run_until_complete(sender())
+event_loop.close()

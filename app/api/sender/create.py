@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, File, UploadFile
+from fastapi import APIRouter, Depends, File, UploadFile, Form
 from .model import *
 import sqlalchemy
 from conf import settings
@@ -21,7 +21,8 @@ router = APIRouter()
              summary='Запрос на создание задания',
              response_model=CreateTaskResponse,
              response_description="Результат запроса на создание задания")
-async def create_category(req: CreateTaskRequest = Depends(), doc: UploadFile = File(...),
+async def create_category(req: CreateTaskRequest = Depends(CreateTaskRequest.as_form),
+                          doc: UploadFile = File(...),
                           credentials: HTTPBasicCredentials = Depends(security)):
     get_current_username(credentials)
     doc_path = settings.FILE_SAVE_PATH + str(random.randint(0, 1000000)) + "_" + doc.filename
@@ -34,4 +35,4 @@ async def create_category(req: CreateTaskRequest = Depends(), doc: UploadFile = 
         await doc_file_file.write(binfile)
         return CreateTaskResponse(status="OK", result="")
 
-    #return CreateTaskResponse(status="Fault", result="")
+    # return CreateTaskResponse(status="Fault", result="")
