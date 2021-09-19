@@ -1,0 +1,14 @@
+# app
+python-multipart
+fastapi
+uvicorn
+pydantic
+aiofiles
+python-dotenv
+psycopg2
+psycopg2-binary
+aiosmtplib
+# db
+databases[postgresql]
+SQLAlchemy
+alembic
