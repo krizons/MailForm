@@ -11,16 +11,15 @@ app.include_router(
     api.router
 )
 
-Snd = Sender()
-asyncio.gather(Snd.sender())
+snd = Sender()
 
 
 @app.on_event("startup")
 async def startup():
-    await db.connect()
+    snd.obj_task = asyncio.create_task(snd.sender())
 
 
 @app.on_event("shutdown")
 async def shutdown():
-    await db.disconnect()
-    await Snd.close()
+    await snd.close()
+    await asyncio.wait({snd.obj_task}, return_when=asyncio.FIRST_COMPLETED)

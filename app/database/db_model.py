@@ -8,5 +8,6 @@ mail_task = sqlalchemy.Table(
     sqlalchemy.Column("subtitle", sqlalchemy.String, nullable=False),
     sqlalchemy.Column("description", sqlalchemy.String, nullable=False),
     sqlalchemy.Column("path_doc", sqlalchemy.String, nullable=False),
+    sqlalchemy.Column("status", sqlalchemy.String, nullable=False),
     sqlalchemy.Column("id", sqlalchemy.Integer, primary_key=True, nullable=False, autoincrement=True),
     )

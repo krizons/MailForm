@@ -25,10 +25,11 @@ router = APIRouter()
 async def all_category(credentials: HTTPBasicCredentials = Depends(security)):
     get_current_username(credentials)
     qu = mail_task.select()
-    row = await db.fetch_all(qu)
-    data_response = []
-    for el in row:
-        data_response.append(
-            AllTaskResponse(heading=el.get("heading"), id=el.get("id"), subtitle=el.get("subtitle"),
-                            description=el.get("description")))
+    async with db.begin() as conn:
+        row = await conn.execute(qu)
+        data_response = []
+        for el in row:
+            data_response.append(
+                AllTaskResponse(heading=el["heading"], id=el["id"], subtitle=el["subtitle"],
+                                description=el["description"]))
     return data_response

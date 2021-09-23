@@ -12,5 +12,6 @@ class Settings(BaseSettings):
     PASS: str
     SMTP_LOGIN: str
     SMTP_PASS: str
+    DB_POOL_SIZE:int
     class Config:
         env_file = "../.env"

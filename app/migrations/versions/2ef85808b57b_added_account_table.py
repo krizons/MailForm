@@ -1,8 +1,8 @@
-"""sender  table
+"""Added account table
 
-Revision ID: a9d45952d9a7
+Revision ID: 2ef85808b57b
 Revises: 
-Create Date: 2021-09-19 16:40:14.494896
+Create Date: 2021-09-22 23:55:22.046656
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a9d45952d9a7'
+revision = '2ef85808b57b'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,6 +23,7 @@ def upgrade():
     sa.Column('subtitle', sa.String(), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
     sa.Column('path_doc', sa.String(), nullable=False),
+    sa.Column('status', sa.String(), nullable=False),
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.PrimaryKeyConstraint('id')
     )

@@ -26,10 +26,12 @@ async def create_category(req: CreateTaskRequest = Depends(CreateTaskRequest.as_
                           credentials: HTTPBasicCredentials = Depends(security)):
     get_current_username(credentials)
     doc_path = settings.FILE_SAVE_PATH + str(random.randint(0, 1000000)) + "_" + doc.filename
-    await db.execute(mail_task.insert(), {"heading": req.heading,
-                                          "subtitle": req.subtitle,
-                                          "description": req.description,
-                                          "path_doc": doc_path})
+    async with db.begin() as conn:
+        await conn.execute(mail_task.insert(), {"heading": req.heading,
+                                                "subtitle": req.subtitle,
+                                                "description": req.description,
+                                                "path_doc": doc_path,
+                                                "status": "idle"})
     async with aiofiles.open(doc_path, 'wb') as doc_file_file:
         binfile = await doc.read()
         await doc_file_file.write(binfile)

@@ -1,14 +1,12 @@
 # app
-python-multipart
 fastapi
 uvicorn
 pydantic
 aiofiles
-python-dotenv
-psycopg2
-psycopg2-binary
 aiosmtplib
+asyncpg
+python-multipart
+python-dotenv
 # db
-databases[postgresql]
 SQLAlchemy
 alembic
